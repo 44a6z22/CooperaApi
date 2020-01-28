@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CooperaApi", "CooperaApi\CooperaApi.csproj", "{7A32B4CE-CE34-4307-8D43-8BDEAA6F01B5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coopera.Data", "Coopera.Data\Coopera.Data.csproj", "{DBA2D4A4-9C64-46C6-92C8-728DCF7E5267}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coopera.Logic", "Coopera.Logic\Coopera.Logic.csproj", "{034F5E9F-5D8B-418A-BC1E-CDFA45A5B715}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{7A32B4CE-CE34-4307-8D43-8BDEAA6F01B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A32B4CE-CE34-4307-8D43-8BDEAA6F01B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A32B4CE-CE34-4307-8D43-8BDEAA6F01B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBA2D4A4-9C64-46C6-92C8-728DCF7E5267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBA2D4A4-9C64-46C6-92C8-728DCF7E5267}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBA2D4A4-9C64-46C6-92C8-728DCF7E5267}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBA2D4A4-9C64-46C6-92C8-728DCF7E5267}.Release|Any CPU.Build.0 = Release|Any CPU
+		{034F5E9F-5D8B-418A-BC1E-CDFA45A5B715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{034F5E9F-5D8B-418A-BC1E-CDFA45A5B715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{034F5E9F-5D8B-418A-BC1E-CDFA45A5B715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{034F5E9F-5D8B-418A-BC1E-CDFA45A5B715}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

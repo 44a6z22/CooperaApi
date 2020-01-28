@@ -1,0 +1,710 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CoopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Commandes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="statusId" Type="int" Nullable="false" />
+          <Property Name="UsersId" Type="int" Nullable="false" />
+          <Property Name="DateCreation" Type="date" />
+          <Property Name="DateLivraison" Type="date" />
+        </EntityType>
+        <EntityType Name="Details commande">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="TotalPrice" Type="real" Nullable="false" />
+          <Property Name="ProduitsId" Type="int" Nullable="false" />
+          <Property Name="CommandesId" Type="int" Nullable="false" />
+          <Property Name="Sub-total" Type="real" />
+        </EntityType>
+        <EntityType Name="Filliers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FilliersId" Type="int" />
+          <Property Name="secteurDactiviteId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProduitsId" Type="int" Nullable="false" />
+          <Property Name="Path" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Produits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsersId" Type="int" Nullable="false" />
+          <Property Name="FilliersId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" />
+          <Property Name="Price" Type="real" Nullable="false" />
+        </EntityType>
+        <EntityType Name="reviews">
+          <Key>
+            <PropertyRef Name="UsersId" />
+            <PropertyRef Name="ProduitsId" />
+          </Key>
+          <Property Name="UsersId" Type="int" Nullable="false" />
+          <Property Name="ProduitsId" Type="int" Nullable="false" />
+          <Property Name="Content" Type="varchar" MaxLength="255" />
+          <Property Name="Rating" Type="real" Nullable="false" />
+        </EntityType>
+        <EntityType Name="secteurDactivite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="255" />
+          <Property Name="PassWord" Type="varchar" MaxLength="255" />
+          <Property Name="Email" Type="varchar" MaxLength="255" />
+          <Property Name="Name" Type="varchar" MaxLength="255" />
+          <Property Name="Adress" Type="varchar" MaxLength="255" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="255" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="IsActivated" Type="bit" Nullable="false" />
+          <Property Name="Matricule" Type="varchar" MaxLength="255" />
+          <Property Name="Discriminator" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FKCommandes456662">
+          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="Commandes" Type="Self.Commandes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Commandes">
+              <PropertyRef Name="statusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKCommandes811927">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Commandes" Type="Self.Commandes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Commandes">
+              <PropertyRef Name="UsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKDetails co486043">
+          <End Role="Produits" Type="Self.Produits" Multiplicity="1" />
+          <End Role="Details commande" Type="Self.Details commande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Details commande">
+              <PropertyRef Name="ProduitsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKDetails co934420">
+          <End Role="Commandes" Type="Self.Commandes" Multiplicity="1" />
+          <End Role="Details commande" Type="Self.Details commande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commandes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Details commande">
+              <PropertyRef Name="CommandesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKFilliers110136">
+          <End Role="Filliers" Type="Self.Filliers" Multiplicity="0..1" />
+          <End Role="Filliers1" Type="Self.Filliers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Filliers1">
+              <PropertyRef Name="FilliersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKFilliers946845">
+          <End Role="secteurDactivite" Type="Self.secteurDactivite" Multiplicity="1" />
+          <End Role="Filliers" Type="Self.Filliers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="secteurDactivite">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Filliers">
+              <PropertyRef Name="secteurDactiviteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKImages541097">
+          <End Role="Produits" Type="Self.Produits" Multiplicity="1" />
+          <End Role="Images" Type="Self.Images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Images">
+              <PropertyRef Name="ProduitsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKProduits456164">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Produits" Type="Self.Produits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Produits">
+              <PropertyRef Name="UsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKProduits803246">
+          <End Role="Filliers" Type="Self.Filliers" Multiplicity="1" />
+          <End Role="Produits" Type="Self.Produits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Produits">
+              <PropertyRef Name="FilliersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKreviews448794">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="reviews">
+              <PropertyRef Name="UsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKreviews90585">
+          <End Role="Produits" Type="Self.Produits" Multiplicity="1" />
+          <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="reviews">
+              <PropertyRef Name="ProduitsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CoopModelStoreContainer">
+          <EntitySet Name="Commandes" EntityType="Self.Commandes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Details commande" EntityType="Self.Details commande" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Filliers" EntityType="Self.Filliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produits" EntityType="Self.Produits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reviews" EntityType="Self.reviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="secteurDactivite" EntityType="Self.secteurDactivite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="status" EntityType="Self.status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FKCommandes456662" Association="Self.FKCommandes456662">
+            <End Role="status" EntitySet="status" />
+            <End Role="Commandes" EntitySet="Commandes" />
+          </AssociationSet>
+          <AssociationSet Name="FKCommandes811927" Association="Self.FKCommandes811927">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Commandes" EntitySet="Commandes" />
+          </AssociationSet>
+          <AssociationSet Name="FKDetails co486043" Association="Self.FKDetails co486043">
+            <End Role="Produits" EntitySet="Produits" />
+            <End Role="Details commande" EntitySet="Details commande" />
+          </AssociationSet>
+          <AssociationSet Name="FKDetails co934420" Association="Self.FKDetails co934420">
+            <End Role="Commandes" EntitySet="Commandes" />
+            <End Role="Details commande" EntitySet="Details commande" />
+          </AssociationSet>
+          <AssociationSet Name="FKFilliers110136" Association="Self.FKFilliers110136">
+            <End Role="Filliers" EntitySet="Filliers" />
+            <End Role="Filliers1" EntitySet="Filliers" />
+          </AssociationSet>
+          <AssociationSet Name="FKFilliers946845" Association="Self.FKFilliers946845">
+            <End Role="secteurDactivite" EntitySet="secteurDactivite" />
+            <End Role="Filliers" EntitySet="Filliers" />
+          </AssociationSet>
+          <AssociationSet Name="FKImages541097" Association="Self.FKImages541097">
+            <End Role="Produits" EntitySet="Produits" />
+            <End Role="Images" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FKProduits456164" Association="Self.FKProduits456164">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Produits" EntitySet="Produits" />
+          </AssociationSet>
+          <AssociationSet Name="FKProduits803246" Association="Self.FKProduits803246">
+            <End Role="Filliers" EntitySet="Filliers" />
+            <End Role="Produits" EntitySet="Produits" />
+          </AssociationSet>
+          <AssociationSet Name="FKreviews448794" Association="Self.FKreviews448794">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="reviews" EntitySet="reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FKreviews90585" Association="Self.FKreviews90585">
+            <End Role="Produits" EntitySet="Produits" />
+            <End Role="reviews" EntitySet="reviews" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CoopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Commandes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="statusId" Type="Int32" Nullable="false" />
+          <Property Name="UsersId" Type="Int32" Nullable="false" />
+          <Property Name="DateCreation" Type="DateTime" Precision="0" />
+          <Property Name="DateLivraison" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="status" Relationship="Self.FKCommandes456662" FromRole="Commandes" ToRole="status" />
+          <NavigationProperty Name="Users" Relationship="Self.FKCommandes811927" FromRole="Commandes" ToRole="Users" />
+          <NavigationProperty Name="Details_commande" Relationship="Self.FKDetails_co934420" FromRole="Commandes" ToRole="Details_commande" />
+        </EntityType>
+        <EntityType Name="Details_commande">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="TotalPrice" Type="Single" Nullable="false" />
+          <Property Name="ProduitsId" Type="Int32" Nullable="false" />
+          <Property Name="CommandesId" Type="Int32" Nullable="false" />
+          <Property Name="Sub_total" Type="Single" />
+          <NavigationProperty Name="Commandes" Relationship="Self.FKDetails_co934420" FromRole="Details_commande" ToRole="Commandes" />
+          <NavigationProperty Name="Produits" Relationship="Self.FKDetails_co486043" FromRole="Details_commande" ToRole="Produits" />
+        </EntityType>
+        <EntityType Name="Filliers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FilliersId" Type="Int32" />
+          <Property Name="secteurDactiviteId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Filliers1" Relationship="Self.FKFilliers110136" FromRole="Filliers" ToRole="Filliers1" />
+          <NavigationProperty Name="Filliers2" Relationship="Self.FKFilliers110136" FromRole="Filliers1" ToRole="Filliers" />
+          <NavigationProperty Name="secteurDactivite" Relationship="Self.FKFilliers946845" FromRole="Filliers" ToRole="secteurDactivite" />
+          <NavigationProperty Name="Produits" Relationship="Self.FKProduits803246" FromRole="Filliers" ToRole="Produits" />
+        </EntityType>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProduitsId" Type="Int32" Nullable="false" />
+          <Property Name="Path" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Produits" Relationship="Self.FKImages541097" FromRole="Images" ToRole="Produits" />
+        </EntityType>
+        <EntityType Name="Produits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsersId" Type="Int32" Nullable="false" />
+          <Property Name="FilliersId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Single" Nullable="false" />
+          <NavigationProperty Name="Details_commande" Relationship="Self.FKDetails_co486043" FromRole="Produits" ToRole="Details_commande" />
+          <NavigationProperty Name="Filliers" Relationship="Self.FKProduits803246" FromRole="Produits" ToRole="Filliers" />
+          <NavigationProperty Name="Images" Relationship="Self.FKImages541097" FromRole="Produits" ToRole="Images" />
+          <NavigationProperty Name="Users" Relationship="Self.FKProduits456164" FromRole="Produits" ToRole="Users" />
+          <NavigationProperty Name="reviews" Relationship="Self.FKreviews90585" FromRole="Produits" ToRole="reviews" />
+        </EntityType>
+        <EntityType Name="reviews">
+          <Key>
+            <PropertyRef Name="UsersId" />
+            <PropertyRef Name="ProduitsId" />
+          </Key>
+          <Property Name="UsersId" Type="Int32" Nullable="false" />
+          <Property Name="ProduitsId" Type="Int32" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Rating" Type="Single" Nullable="false" />
+          <NavigationProperty Name="Produits" Relationship="Self.FKreviews90585" FromRole="reviews" ToRole="Produits" />
+          <NavigationProperty Name="Users" Relationship="Self.FKreviews448794" FromRole="reviews" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="secteurDactivite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Filliers" Relationship="Self.FKFilliers946845" FromRole="secteurDactivite" ToRole="Filliers" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Commandes" Relationship="Self.FKCommandes456662" FromRole="status" ToRole="Commandes" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PassWord" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Adress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="IsActivated" Type="Boolean" Nullable="false" />
+          <Property Name="Matricule" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Discriminator" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Commandes" Relationship="Self.FKCommandes811927" FromRole="Users" ToRole="Commandes" />
+          <NavigationProperty Name="Produits" Relationship="Self.FKProduits456164" FromRole="Users" ToRole="Produits" />
+          <NavigationProperty Name="reviews" Relationship="Self.FKreviews448794" FromRole="Users" ToRole="reviews" />
+        </EntityType>
+        <Association Name="FKCommandes456662">
+          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="Commandes" Type="Self.Commandes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Commandes">
+              <PropertyRef Name="statusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKCommandes811927">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Commandes" Type="Self.Commandes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Commandes">
+              <PropertyRef Name="UsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKDetails_co934420">
+          <End Role="Commandes" Type="Self.Commandes" Multiplicity="1" />
+          <End Role="Details_commande" Type="Self.Details_commande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commandes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Details_commande">
+              <PropertyRef Name="CommandesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKDetails_co486043">
+          <End Role="Produits" Type="Self.Produits" Multiplicity="1" />
+          <End Role="Details_commande" Type="Self.Details_commande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Details_commande">
+              <PropertyRef Name="ProduitsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKFilliers110136">
+          <End Role="Filliers" Type="Self.Filliers" Multiplicity="0..1" />
+          <End Role="Filliers1" Type="Self.Filliers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Filliers1">
+              <PropertyRef Name="FilliersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKFilliers946845">
+          <End Role="secteurDactivite" Type="Self.secteurDactivite" Multiplicity="1" />
+          <End Role="Filliers" Type="Self.Filliers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="secteurDactivite">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Filliers">
+              <PropertyRef Name="secteurDactiviteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKProduits803246">
+          <End Role="Filliers" Type="Self.Filliers" Multiplicity="1" />
+          <End Role="Produits" Type="Self.Produits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Produits">
+              <PropertyRef Name="FilliersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKImages541097">
+          <End Role="Produits" Type="Self.Produits" Multiplicity="1" />
+          <End Role="Images" Type="Self.Images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Images">
+              <PropertyRef Name="ProduitsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKProduits456164">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Produits" Type="Self.Produits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Produits">
+              <PropertyRef Name="UsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKreviews90585">
+          <End Role="Produits" Type="Self.Produits" Multiplicity="1" />
+          <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produits">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="reviews">
+              <PropertyRef Name="ProduitsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKreviews448794">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="reviews">
+              <PropertyRef Name="UsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CoopEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Commandes" EntityType="Self.Commandes" />
+          <EntitySet Name="Details_commande" EntityType="Self.Details_commande" />
+          <EntitySet Name="Filliers" EntityType="Self.Filliers" />
+          <EntitySet Name="Images" EntityType="Self.Images" />
+          <EntitySet Name="Produits" EntityType="Self.Produits" />
+          <EntitySet Name="reviews" EntityType="Self.reviews" />
+          <EntitySet Name="secteurDactivite" EntityType="Self.secteurDactivite" />
+          <EntitySet Name="status" EntityType="Self.status" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FKCommandes456662" Association="Self.FKCommandes456662">
+            <End Role="status" EntitySet="status" />
+            <End Role="Commandes" EntitySet="Commandes" />
+          </AssociationSet>
+          <AssociationSet Name="FKCommandes811927" Association="Self.FKCommandes811927">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Commandes" EntitySet="Commandes" />
+          </AssociationSet>
+          <AssociationSet Name="FKDetails_co934420" Association="Self.FKDetails_co934420">
+            <End Role="Commandes" EntitySet="Commandes" />
+            <End Role="Details_commande" EntitySet="Details_commande" />
+          </AssociationSet>
+          <AssociationSet Name="FKDetails_co486043" Association="Self.FKDetails_co486043">
+            <End Role="Produits" EntitySet="Produits" />
+            <End Role="Details_commande" EntitySet="Details_commande" />
+          </AssociationSet>
+          <AssociationSet Name="FKFilliers110136" Association="Self.FKFilliers110136">
+            <End Role="Filliers" EntitySet="Filliers" />
+            <End Role="Filliers1" EntitySet="Filliers" />
+          </AssociationSet>
+          <AssociationSet Name="FKFilliers946845" Association="Self.FKFilliers946845">
+            <End Role="secteurDactivite" EntitySet="secteurDactivite" />
+            <End Role="Filliers" EntitySet="Filliers" />
+          </AssociationSet>
+          <AssociationSet Name="FKProduits803246" Association="Self.FKProduits803246">
+            <End Role="Filliers" EntitySet="Filliers" />
+            <End Role="Produits" EntitySet="Produits" />
+          </AssociationSet>
+          <AssociationSet Name="FKImages541097" Association="Self.FKImages541097">
+            <End Role="Produits" EntitySet="Produits" />
+            <End Role="Images" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FKProduits456164" Association="Self.FKProduits456164">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Produits" EntitySet="Produits" />
+          </AssociationSet>
+          <AssociationSet Name="FKreviews90585" Association="Self.FKreviews90585">
+            <End Role="Produits" EntitySet="Produits" />
+            <End Role="reviews" EntitySet="reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FKreviews448794" Association="Self.FKreviews448794">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="reviews" EntitySet="reviews" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CoopModelStoreContainer" CdmEntityContainer="CoopEntities">
+          <EntitySetMapping Name="Commandes">
+            <EntityTypeMapping TypeName="CoopModel.Commandes">
+              <MappingFragment StoreEntitySet="Commandes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="statusId" ColumnName="statusId" />
+                <ScalarProperty Name="UsersId" ColumnName="UsersId" />
+                <ScalarProperty Name="DateCreation" ColumnName="DateCreation" />
+                <ScalarProperty Name="DateLivraison" ColumnName="DateLivraison" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Details_commande">
+            <EntityTypeMapping TypeName="CoopModel.Details_commande">
+              <MappingFragment StoreEntitySet="Details commande">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="ProduitsId" ColumnName="ProduitsId" />
+                <ScalarProperty Name="CommandesId" ColumnName="CommandesId" />
+                <ScalarProperty Name="Sub_total" ColumnName="Sub-total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Filliers">
+            <EntityTypeMapping TypeName="CoopModel.Filliers">
+              <MappingFragment StoreEntitySet="Filliers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FilliersId" ColumnName="FilliersId" />
+                <ScalarProperty Name="secteurDactiviteId" ColumnName="secteurDactiviteId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="CoopModel.Images">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProduitsId" ColumnName="ProduitsId" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produits">
+            <EntityTypeMapping TypeName="CoopModel.Produits">
+              <MappingFragment StoreEntitySet="Produits">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UsersId" ColumnName="UsersId" />
+                <ScalarProperty Name="FilliersId" ColumnName="FilliersId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reviews">
+            <EntityTypeMapping TypeName="CoopModel.reviews">
+              <MappingFragment StoreEntitySet="reviews">
+                <ScalarProperty Name="UsersId" ColumnName="UsersId" />
+                <ScalarProperty Name="ProduitsId" ColumnName="ProduitsId" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="secteurDactivite">
+            <EntityTypeMapping TypeName="CoopModel.secteurDactivite">
+              <MappingFragment StoreEntitySet="secteurDactivite">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="status">
+            <EntityTypeMapping TypeName="CoopModel.status">
+              <MappingFragment StoreEntitySet="status">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CoopModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActivated" ColumnName="IsActivated" />
+                <ScalarProperty Name="Matricule" ColumnName="Matricule" />
+                <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
