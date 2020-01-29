@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Coopera.Data;
 using CooperaApi.Models;
+//using Coopera.Logic;
 
 namespace CooperaApi.Controllers
 {
@@ -21,7 +22,8 @@ namespace CooperaApi.Controllers
         public IHttpActionResult GetDetails_commande()
         {
             var ok = db.Details_commande.ToList();
-            IEnumerable<OrderDetailsModel> listOrderDetail = from od in ok where od.Commandes.UsersId == 2 select new OrderDetailsModel(od,od.Commandes, od.Produits);
+            IEnumerable<OrderDetailsModel> listOrderDetail = from od in ok select new OrderDetailsModel(od,od.Commandes, od.Produits);
+        
             return Ok(listOrderDetail);
         }
 
@@ -36,6 +38,50 @@ namespace CooperaApi.Controllers
             }
 
             return Ok(details_commande);
+        }
+
+        // GET: api/DetailsCommande/User/2
+        [Route("Api/DetailsCommande/User/{id}")]
+        public IHttpActionResult getDetailCommandes(int id)
+        {
+            var ok = db.Details_commande.ToList();
+            IEnumerable<OrderDetailsModel> listOrderDetail = from od in ok
+                                                             where od.Commandes.UsersId == id
+                                                             select new OrderDetailsModel(
+                                                                 od,
+                                                                 od.Commandes,
+                                                                 od.Produits
+                                                                );
+            return Ok(listOrderDetail);
+        }
+        // GET: api/DetailsCommande/User/2
+        [Route("Api/DetailsCommande/{StatusId}/User/{id}")]
+        public IHttpActionResult getDetailCommandes(int StatusId, int id)
+        {
+            var ok = db.Details_commande.ToList();
+            IEnumerable<OrderDetailsModel> listOrderDetail = from od in ok
+                                                             where od.Commandes.UsersId == id
+                                                             where od.Commandes.statusId == StatusId
+                                                             select new OrderDetailsModel(
+                                                                 od,
+                                                                 od.Commandes ,
+                                                                 od.Produits
+                                                                );
+            return Ok(listOrderDetail);
+        }
+        // GET: Api/DetailsCommande/User/CountOrders/5
+        [Route("Api/DetailsCommande/User/CountOrders/{userId}")]
+        public IHttpActionResult getCommandesCount(int userId)
+        {
+            var detailCommandList = db.Details_commande.ToList();
+            IEnumerable<OrderDetailsModel> listOrderDetail = from od in detailCommandList
+                                                             where od.Commandes.UsersId == userId
+                                                             select new OrderDetailsModel(
+                                                                 od,
+                                                                 od.Commandes,
+                                                                 od.Produits
+                                                                );
+            return Ok(listOrderDetail.Count());
         }
 
         // PUT: api/DetailsCommande/5

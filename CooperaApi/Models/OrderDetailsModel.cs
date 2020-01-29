@@ -26,7 +26,7 @@ namespace CooperaApi.Models
             this.ProduitsId = obj.ProduitsId;
             this.CommandesId = obj.CommandesId;
             this.Sub_total = obj.Sub_total;
-            this.Order = new OrderModel(order);
+            this.Order = new OrderModel(order, order.status);
 
             this.Product = new ProductModel(product, 
                             from i in product.Images select new ImagesModel(i), 

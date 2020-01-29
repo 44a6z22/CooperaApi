@@ -14,13 +14,16 @@ namespace CooperaApi.Models
         public Nullable<System.DateTime> DateCreation { get; set; }
         public Nullable<System.DateTime> DateLivraison { get; set; }
 
-        public OrderModel(Commandes obj)
+        public StatusModel status { get; set; }
+
+        public OrderModel(Commandes obj, status s)
         {
             this.Id = obj.Id;
             this.statusId = obj.statusId;
             this.UsersId = obj.UsersId;
             this.DateCreation = obj.DateCreation;
-            this.DateLivraison = obj.DateLivraison; 
+            this.DateLivraison = obj.DateLivraison;
+            this.status = new StatusModel(s); 
         }
     }
 }

@@ -12,7 +12,9 @@ namespace CooperaApi.Models
         public int ProductId { get; set; }
         public string Path { get; set; }
 
-        public ImagesModel(Images obj )
+        public ImagesModel(){}
+
+        public ImagesModel(Images obj)
         {
             this.Id = obj.Id;
             this.ProductId= obj.ProduitsId;
