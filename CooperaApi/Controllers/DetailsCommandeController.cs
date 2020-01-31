@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Coopera.Data;
+using Coopera.Logic.managers;
 using CooperaApi.Models;
 //using Coopera.Logic;
 
@@ -67,6 +68,7 @@ namespace CooperaApi.Controllers
                                                                  od.Commandes ,
                                                                  od.Produits
                                                                 );
+            //var numbers = from lod in listOrderDetail select lod.TotalPrice; 
             return Ok(listOrderDetail);
         }
         // GET: Api/DetailsCommande/User/CountOrders/5
@@ -84,7 +86,7 @@ namespace CooperaApi.Controllers
             return Ok(listOrderDetail.Count());
         }
 
-        // PUT: api/DetailsCommande/5
+        // PUT: api/DetailsCommande/5/
         [ResponseType(typeof(void))]
         public IHttpActionResult PutDetails_commande(int id, Details_commande details_commande)
         {
@@ -94,6 +96,42 @@ namespace CooperaApi.Controllers
             }
 
             if (id != details_commande.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(details_commande).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!Details_commandeExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // PUT: api/DetailsCommande/5/2
+        [Route("api/DetailsCommande/{id}/{userId}")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutDetails_commande(int id, int userId, Details_commande details_commande)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != details_commande.Id && userId != details_commande.Commandes.UsersId)
             {
                 return BadRequest();
             }

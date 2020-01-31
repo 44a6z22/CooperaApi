@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="fa528dfa361a458ba17322ca473442b5" Name="Diagram1">
-        <EntityTypeShape EntityType="CoopModel.Commandes" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CoopModel.Commandes" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CoopModel.Details_commande" Width="1.5" PointX="8.25" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CoopModel.Filliers" Width="1.5" PointX="3.75" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CoopModel.Images" Width="1.5" PointX="8.25" PointY="4.625" IsExpanded="true" />

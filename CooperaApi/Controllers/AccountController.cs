@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using CooperaApi.Models;
 using CooperaApi.Providers;
 using CooperaApi.Results;
+using Coopera.Data;
 
 namespace CooperaApi.Controllers
 {
@@ -315,28 +316,48 @@ namespace CooperaApi.Controllers
                 logins.Add(login);
             }
 
+
+
+
+
+
+
+
+
+
             return logins;
         }
 
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        public async Task<IHttpActionResult> Register(Users model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            
+
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            IdentityResult result = await UserManager.CreateAsync(user, model.PassWord);
 
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
 
+            model.PassWord = "";
+
+            using (var context = new CoopEntities())
+            {
+                context.Users.Add(model);
+                context.SaveChanges();
+            }
+
+            
             return Ok();
         }
 
