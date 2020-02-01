@@ -105,23 +105,13 @@ namespace CooperaApi.Controllers
           
             produits.Users = db.Users.Find(produits.UsersId);
             produits.Filliers = db.Filliers.Find(produits.FilliersId);
-            produits.reviews = new List<reviews>();
-            produits.Details_commande = new List<Details_commande>();
+
 
             db.Produits.Add(produits);
             db.SaveChanges();
 
-            List<ImagesModel> list = new List<ImagesModel>();
-            foreach (var i in produits.Images)
-            {
-                list.Add(new ImagesModel(i) );
-            }
-            List<ReviewsModel> Reviews = new List<ReviewsModel>();
-            foreach (var i in produits.reviews)
-            {
-                Reviews.Add(new ReviewsModel(i));
-            }
-            return CreatedAtRoute("DefaultApi", new { id = produits.Id }, new ProductModel(produits, list, Reviews));
+          
+            return Ok();
         }
 
         // DELETE: api/Produits/5

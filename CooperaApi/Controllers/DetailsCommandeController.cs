@@ -55,6 +55,7 @@ namespace CooperaApi.Controllers
                                                                 );
             return Ok(listOrderDetail);
         }
+
         // GET: api/DetailsCommande/User/2
         [Route("Api/DetailsCommande/{StatusId}/User/{id}")]
         public IHttpActionResult getDetailCommandes(int StatusId, int id)
@@ -71,6 +72,7 @@ namespace CooperaApi.Controllers
             //var numbers = from lod in listOrderDetail select lod.TotalPrice; 
             return Ok(listOrderDetail);
         }
+
         // GET: Api/DetailsCommande/User/CountOrders/5
         [Route("Api/DetailsCommande/User/CountOrders/{userId}")]
         public IHttpActionResult getCommandesCount(int userId)
